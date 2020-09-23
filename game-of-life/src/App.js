@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
 // import logo from './logo.svg';
-// import './App.css';
+import "./App.css";
 import produce from "immer";
 
 const numRows = 50;
@@ -17,14 +17,18 @@ const operations = [
   [-1, 0],
 ]; // represents locations surrounding current cell (neighbor cells)
 
+const generateEmptyGrid = () => {
+  const rows = [];
+  for (let i = 0; i < numRows; i++) {
+    rows.push(Array.from(Array(numCols), () => 0));
+  }
+
+  return rows;
+}; // clears the grid
+
 function App() {
   const [grid, setGrid] = useState(() => {
-    const rows = [];
-    for (let i = 0; i < numRows; i++) {
-      rows.push(Array.from(Array(numCols), () => 0));
-    }
-
-    return rows;
+    return generateEmptyGrid();
   });
 
   const [running, setRunning] = useState(false); // by default 'running' state is false
@@ -64,7 +68,7 @@ function App() {
       });
     });
 
-    setTimeout(runSimulation, 100); // runs once every .1 second
+    setTimeout(runSimulation, 100); // runs once every .5 second
   }, []);
 
   return (
@@ -79,6 +83,27 @@ function App() {
         }}
       >
         {running ? "STOP LIFE" : "START LIFE"}
+      </button>
+      <button
+        onClick={() => {
+          setGrid(generateEmptyGrid());
+        }}
+      >
+        CLEAR
+      </button>
+      <button
+        onClick={() => {
+          const rows = [];
+          for (let i = 0; i < numRows; i++) {
+            rows.push(
+              Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
+            );
+          }
+
+          setGrid(rows);
+        }}
+      >
+        RANDOMIZE
       </button>
       <div
         style={{
@@ -100,8 +125,8 @@ function App() {
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][k] ? "hotpink" : undefined, // ternary
-                border: "solid 1px black",
+                backgroundColor: grid[i][k] ? "#EC87E4" : "#D3FBD8", // ternary to decide color of live/dead cells
+                border: "solid 1px #000000",
               }}
             />
           ))
