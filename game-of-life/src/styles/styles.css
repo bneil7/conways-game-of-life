@@ -1,0 +1,51 @@
+h1 {
+  font-size: 60px;
+  text-shadow: 2px 2px black;
+  color: #d3fbd8;
+}
+h2 {
+  text-decoration: underline;
+}
+
+a {
+  text-decoration: none;
+  color: #d3fbd8;
+}
+a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+Button {
+  display: flex;
+  justify-content: center;
+  width: 10%;
+}
+
+.MuiButtonGroup-root {
+  display: flex;
+  width: 10%;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  align-self: center;
+}
+
+.rules {
+  border: 1px solid lime;
+  background-color: #d3fbd8;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+li {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 50px;
+}

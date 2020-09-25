@@ -1,8 +1,10 @@
 import React, { useState, useCallback, useRef } from "react";
-// import "../styles";
+import "../styles/styles.css";
 import produce from "immer";
 
 import Slider from "@material-ui/core/Slider";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
 
 const operations = [
   [0, 1],
@@ -81,9 +83,8 @@ function Life() {
     setTimeout(() => {
       runSimulation();
       setGenerations(gen => gen + 1);
-      console.log(generations);
     }, playSpeed);
-  }, [numCols, numRows]);
+  }, [numCols, numRows, playSpeed]);
 
   const handleChange = (e, newVal) => {
     setPlaySpeed(newVal);
@@ -96,72 +97,90 @@ function Life() {
 
   return (
     <div className="App">
-      <button
-        onClick={() => {
-          setRunning(!running);
-          if (!running) {
-            runningRef.current = true;
-            runSimulation();
-          }
-        }}
-      >
-        {running ? "STOP LIFE" : "START LIFE"}
-      </button>
-      <button>STEP</button>
-      <button
-        onClick={() => {
-          setGrid(generateEmptyGrid());
-          setGenerations(0);
-        }}
-      >
-        CLEAR
-      </button>
-      <button
-        onClick={() => {
-          const rows = [];
-          for (let i = 0; i < numRows; i++) {
-            rows.push(
-              Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
-            );
-          }
-
-          setGrid(rows);
-          setGenerations(0);
-        }}
-      >
-        RANDOMIZE
-      </button>
+      <h1>John Conway's Game of Life</h1>
+      <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">
+        Wikipedia
+      </a>
       <br />
-      <button
-        onClick={() => {
-          resizeGrid(25);
-        }}
-      >
-        {running ? "!25x25!" : "25x25"}
-      </button>
-      <button
-        onClick={() => {
-          resizeGrid(35);
-        }}
-      >
-        {running ? "!35x35!" : "35x35"}
-      </button>
-      <button
-        onClick={() => {
-          resizeGrid(50);
-        }}
-      >
-        {running ? "!50x50!" : "50x50"}
-      </button>
-      <button
-        onClick={() => {
-          resizeGrid(42);
-        }}
-      >
-        {running ? "!42x42!" : "42x42"}
-      </button>
+      <h2>Operations</h2>
+      <ButtonGroup orientation="vertical" fullWidth="true">
+        <Button
+          onClick={() => {
+            setRunning(!running);
+            if (!running) {
+              runningRef.current = true;
+              runSimulation();
+            }
+          }}
+        >
+          {running ? "STOP" : "START"}
+        </Button>
+        <Button disabled={true}>STEP</Button>
+        <Button
+          onClick={() => {
+            setGrid(generateEmptyGrid());
+            setGenerations(0);
+          }}
+          disabled={running ? true : false}
+        >
+          CLEAR
+        </Button>
+        <Button
+          onClick={() => {
+            const rows = [];
+            for (let i = 0; i < numRows; i++) {
+              rows.push(
+                Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
+              );
+            }
+
+            setGrid(rows);
+            setGenerations(0);
+          }}
+          disabled={running ? true : false}
+        >
+          RANDOMIZE
+        </Button>
+      </ButtonGroup>
+      <br />
+      <h4>Select Grid Size:</h4>
+      <div className="gridsize">
+        <Button
+          onClick={() => {
+            resizeGrid(25);
+          }}
+          disabled={running ? true : false}
+        >
+          {running ? "!25x25!" : "25x25"}
+        </Button>
+        <Button
+          onClick={() => {
+            resizeGrid(35);
+          }}
+          disabled={running ? true : false}
+        >
+          {running ? "!35x35!" : "35x35"}
+        </Button>
+        <Button
+          onClick={() => {
+            resizeGrid(50);
+          }}
+          disabled={running ? true : false}
+        >
+          {running ? "!50x50!" : "50x50"}
+        </Button>
+        <Button
+          onClick={() => {
+            resizeGrid(42);
+          }}
+          disabled={running ? true : false}
+        >
+          {running ? "!42x42!" : "42x42"}
+        </Button>
+      </div>
       <h2>Generation counter: {generations}</h2>
       <div
+        className="grid"
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${numCols}, 20px)`,
@@ -199,18 +218,35 @@ function Life() {
         )}
       </div>
       <h2>
-        Speed Slider (ms)
+        Speed Slider (X milliseconds per generation)
         <Slider
           label="speed"
           value={playSpeed}
           onChange={handleChange}
-          min={100}
+          min={10}
           max={1000}
-          step={100}
-          valueLabelDisplay="auto"
+          step={10}
+          valueLabelDisplay="on"
           marks={true}
         />
       </h2>
+      <div className="rules">
+        <h3>Rules</h3>
+        <h4>
+          These rules, which compare the behavior of the automaton to real life,
+          can be condensed into the following:
+        </h4>
+        <ol>
+          <li>1. Any live cell with two or three live neighbours survives.</li>
+          <li>
+            2. Any dead cell with three live neighbours becomes a live cell.
+          </li>
+          <li>
+            3. All other live cells die in the next generation. Similarly, all
+            other dead cells stay dead.
+          </li>
+        </ol>
+      </div>
     </div>
   );
 }
