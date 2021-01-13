@@ -217,19 +217,21 @@ function Life() {
           ))
         )}
       </div>
-      <h2>
-        Speed Slider (X milliseconds per generation)
-        <Slider
-          label="speed"
-          value={playSpeed}
-          onChange={handleChange}
-          min={10}
-          max={1000}
-          step={10}
-          valueLabelDisplay="on"
-          marks={true}
-        />
-      </h2>
+      <div className="slider">
+        <h2>
+          Speed Slider (X milliseconds per generation)
+          <Slider
+            label="speed"
+            value={playSpeed}
+            onChange={handleChange}
+            min={10}
+            max={1000}
+            step={10}
+            valueLabelDisplay="on"
+            marks={true}
+          />
+        </h2>
+      </div>
       <div className="rules">
         <h3>Rules</h3>
         <h4>

@@ -16,3 +16,17 @@ These rules, which compare the behavior of the automaton to real life, can be co
 3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 
 The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed; births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick. Each generation is a pure function of the preceding one. The rules continue to be applied repeatedly to create further generations.
+
+####
+
+## Custom Features
+
+Implement at least 3 of the following features:
+
+- Create a few sample cell configurations that users can load and run
+- Add an option that creates a random cell configuration that users can run ✅
+- Add additional cell properties, like color or size, and incorporate them into your visualization
+- Allow users to specify the speed of the simulation ✅ (useRef)
+- Provide functionality to manually step through the simulation one generation at a time, as opposed to animating automatically
+- Allow users to change the dimension of the grid being displayed ✅
+- Given a specific generation, calculate the configuration of cells at that point in time, and jump to that state, bypassing animation (i.e. skip ahead n generations).
